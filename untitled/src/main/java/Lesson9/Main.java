@@ -1,4 +1,5 @@
 package Lesson9;
+
 import java.util.Scanner;
 
 public class Main {
@@ -11,24 +12,19 @@ public class Main {
         String[][] array = new String[size1][size2];
         try {
             checkArraySize(array, 4, 4);
-        } catch (MyArraySizeException e) {
+            System.out.println("Сумма элементов массива : " + checkArrayInt(array));
+        } catch (MyArraySizeException | MyArrayDataException e) {
             throw new RuntimeException(e);
         }
 
-        try {
-            System.out.println("Сумма элементов массива : " + checkArrayInt(array));
-        } catch (MyArrayDataException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println();
+
     }
 
     private static void checkArraySize(String[][] array, int row, int col) throws MyArraySizeException {
-        if (array.length == row)
-            for (int i = 0; i < array.length; i++) {
-                if (array[i].length != col) break;
-                if (i == array.length - 1) return;
-            }
+        if (array.length == row) for (int i = 0; i < array.length; i++) {
+            if (array[i].length != col) break;
+            if (i == array.length - 1) return;
+        }
 
         throw new MyArraySizeException("Размер массива должен быть " + row + "x" + col);
     }
