@@ -4,7 +4,9 @@ import java.util.Arrays;
 
 public class Main {
     private static final int SIZE = 10_000_000;
+    private static final int SIZE_CHECK = 10;
     private static final int HALF = SIZE / 2;
+    private static final int HALF_CHECK = SIZE_CHECK / 2;
 
     public static void main(String[] args) {
         array1();
@@ -63,12 +65,12 @@ public class Main {
     }
 
     private static void array1check() {
-        float[] arr = new float[SIZE];
-        for (int i = 0; i < SIZE; i++) {
+        float[] arr = new float[SIZE_CHECK];
+        for (int i = 0; i < SIZE_CHECK; i++) {
             arr[i] = 1;
         }
         long a = System.currentTimeMillis();
-        for (int i = 0; i < SIZE; i++) {
+        for (int i = 0; i < SIZE_CHECK; i++) {
             arr[i] = calculate(arr[i], i);
         }
         System.out.println(Arrays.toString(arr));
@@ -77,23 +79,23 @@ public class Main {
 
 
     private static void array2check() {
-        float[] arr = new float[SIZE];
-        float[] a1 = new float[HALF];
-        float[] a2 = new float[HALF];
-        for (int i = 0; i < SIZE; i++) {
+        float[] arr = new float[SIZE_CHECK];
+        float[] a1 = new float[HALF_CHECK];
+        float[] a2 = new float[HALF_CHECK];
+        for (int i = 0; i < SIZE_CHECK; i++) {
             arr[i] = 1;
         }
         long a = System.currentTimeMillis();
-        System.arraycopy(arr, 0, a1, 0, HALF);
-        System.arraycopy(arr, HALF, a2, 0, HALF);
+        System.arraycopy(arr, 0, a1, 0, HALF_CHECK);
+        System.arraycopy(arr, HALF_CHECK, a2, 0, HALF_CHECK);
         Thread thread1 = new Thread(() -> {
-            for (int i = 0; i < HALF; i++) {
+            for (int i = 0; i < HALF_CHECK; i++) {
                 a1[i] = calculate(a1[i], i);
             }
         });
         Thread thread2 = new Thread(() -> {
-            for (int i = 0; i < HALF; i++) {
-                a2[i] = calculate(a2[i], HALF + i);
+            for (int i = 0; i < HALF_CHECK; i++) {
+                a2[i] = calculate(a2[i], HALF_CHECK + i);
             }
         });
         thread1.start();
@@ -106,10 +108,10 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        float[] arrResult = new float[SIZE];
+        float[] arrResult = new float[SIZE_CHECK];
 
-        System.arraycopy(a1, 0, arrResult, 0, HALF);
-        System.arraycopy(a2, 0, arrResult, HALF, HALF);
+        System.arraycopy(a1, 0, arrResult, 0, HALF_CHECK);
+        System.arraycopy(a2, 0, arrResult, HALF_CHECK, HALF_CHECK);
 
         System.out.println(Arrays.toString(arrResult));
     }
