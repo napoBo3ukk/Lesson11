@@ -3,7 +3,6 @@ package Lesson11;
 import java.util.*;
 
 public class PhoneBook {
-    Scanner input = new Scanner(System.in);
 
     public Map<String, List<String>> getPhoneBook() {
         return phoneBook;
